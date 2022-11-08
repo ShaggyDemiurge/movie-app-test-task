@@ -4,8 +4,6 @@ plugins {
 }
 
 android {
-    namespace = buildsrc.Config.appId
-
     defaultConfig {
         applicationId = buildsrc.Config.appId
     }
