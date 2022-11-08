@@ -23,7 +23,9 @@ object Lib {
         const val Material = "androidx.compose.material:material:$Version"
         const val MaterialIconsCore = "androidx.compose.material:material-icons-core:$Version"
         const val MaterialIconsExt = "androidx.compose.material:material-icons-extended:$Version"
-        const val Navigation = "androidx.navigation:navigation-compose:2.5.3"
+
+        // Using this instead of standard navigation for argument support and type safety without adding KSP
+        const val Navigation = "dev.olshevski.navigation:reimagined:1.3.0"
     }
 
     const val Koin = "io.insert-koin:koin-androidx-compose:3.3.0"

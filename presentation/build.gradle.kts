@@ -2,6 +2,7 @@ import buildsrc.Lib
 
 plugins {
     id("com.android.library")
+    id("kotlin-parcelize")
     id("android-module")
 }
 
