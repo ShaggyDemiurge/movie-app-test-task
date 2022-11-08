@@ -6,6 +6,7 @@ object Lib {
     object Kotlin {
         const val Version = "1.7.10"
         const val StdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$Version"
+        const val Coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
     }
 
     object Android {
@@ -26,6 +27,11 @@ object Lib {
 
         // Using this instead of standard navigation for argument support and type safety without adding KSP
         const val Navigation = "dev.olshevski.navigation:reimagined:1.3.0"
+    }
+
+    object Logger {
+        const val slf4j = "org.slf4j:slf4j-api:1.7.33"
+        const val logbackAndroid = "com.github.tony19:logback-android:2.0.0"
     }
 
     const val Koin = "io.insert-koin:koin-androidx-compose:3.3.0"

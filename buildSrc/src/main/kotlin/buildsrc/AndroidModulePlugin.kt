@@ -33,6 +33,7 @@ class AndroidModulePlugin : Plugin<Project> {
         }
         target.dependencies {
             add(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME, Lib.Kotlin.StdLib)
+            add(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME, Lib.Kotlin.Coroutines)
         }
     }
 }
