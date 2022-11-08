@@ -25,4 +25,6 @@ object Lib {
         const val MaterialIconsExt = "androidx.compose.material:material-icons-extended:$Version"
         const val Navigation = "androidx.navigation:navigation-compose:2.5.3"
     }
+
+    const val Koin = "io.insert-koin:koin-androidx-compose:3.3.0"
 }

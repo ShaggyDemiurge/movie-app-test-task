@@ -21,7 +21,6 @@ class AndroidModulePlugin : Plugin<Project> {
         target.extensions.configure<BaseExtension> {
             compileSdkVersion(Config.compileSdk)
             defaultConfig {
-                applicationId = Config.appId
                 minSdk = Config.minSdk
                 targetSdk = Config.targetSdk
                 versionCode = Config.versionCode
