@@ -4,7 +4,9 @@ import com.android.build.gradle.BaseExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPlugin
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 import org.jmailen.gradle.kotlinter.KotlinterExtension
 
 class AndroidModulePlugin : Plugin<Project> {
@@ -29,6 +31,9 @@ class AndroidModulePlugin : Plugin<Project> {
                 sourceCompatibility = JavaVersion.VERSION_11
                 targetCompatibility = JavaVersion.VERSION_11
             }
+        }
+        target.dependencies {
+            add(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME, Lib.Kotlin.StdLib)
         }
     }
 }

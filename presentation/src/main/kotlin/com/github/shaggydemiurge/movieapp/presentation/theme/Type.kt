@@ -1,4 +1,4 @@
-package com.github.shaggydemiurge.movieapp.ui.theme
+package com.github.shaggydemiurge.movieapp.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

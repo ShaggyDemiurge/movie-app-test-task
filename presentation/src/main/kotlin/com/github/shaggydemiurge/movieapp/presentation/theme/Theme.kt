@@ -1,4 +1,4 @@
-package com.github.shaggydemiurge.movieapp.ui.theme // ktlint-disable filename
+package com.github.shaggydemiurge.movieapp.presentation.theme // ktlint-disable filename
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

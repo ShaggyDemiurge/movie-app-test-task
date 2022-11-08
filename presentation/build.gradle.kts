@@ -12,11 +12,19 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Lib.Compose.CompilerVersion
+        kotlinCompilerExtensionVersion = Lib.Compose.Version
     }
 }
 
 dependencies {
     implementation(project(":core"))
     implementation(project(":domain"))
+
+    implementation(Lib.Android.Core)
+    implementation(Lib.Android.AppCompat)
+    implementation(Lib.Compose.Core)
+    debugImplementation(Lib.Compose.UiTooling)
+    implementation(Lib.Compose.Preview)
+    implementation(Lib.Compose.Material)
+    implementation(Lib.Compose.Navigation)
 }
