@@ -1,19 +1,15 @@
+package buildsrc
+
 import com.android.build.gradle.BaseExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.repositories
 import org.jmailen.gradle.kotlinter.KotlinterExtension
-import java.net.URI
 
 class AndroidModulePlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        target.repositories {
-            mavenCentral()
-            google()
-            maven { url = URI.create("https://plugins.gradle.org/m2/") }
-        }
+        target.pluginManager.apply("org.jetbrains.kotlin.android")
         target.pluginManager.apply("org.jmailen.kotlinter")
         target.extensions.configure<KotlinterExtension> {
             ignoreFailures = false

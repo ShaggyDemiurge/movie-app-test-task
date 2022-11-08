@@ -1,3 +1,5 @@
+package buildsrc
+
 object Config {
     const val appId = "com.github.shaggydemiurge.movieapp"
     const val compileSdk = 33
