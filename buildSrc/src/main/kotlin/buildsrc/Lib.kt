@@ -38,4 +38,19 @@ object Lib {
 
     const val Koin = "io.insert-koin:koin-androidx-compose:3.3.0"
     const val Landscapist = "com.github.skydoves:landscapist-glide:2.0.3"
+
+    object Network {
+        private const val okHttp3Version = "4.10.0"
+        const val okHttp3 = "com.squareup.okhttp3:okhttp:$okHttp3Version"
+        const val okHttp3LoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$okHttp3Version"
+        private const val retrofitVersion = "2.9.0"
+        const val retrofit2 = "com.squareup.retrofit2:retrofit:$retrofitVersion"
+        const val retrofit2moshi = "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    }
+
+    object Moshi {
+        private const val version = "1.14.0"
+        const val core = "com.squareup.moshi:moshi:$version"
+        const val codegen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
+    }
 }

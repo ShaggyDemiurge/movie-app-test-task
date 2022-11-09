@@ -1,3 +1,5 @@
+import buildsrc.Config
+
 plugins {
     id("com.android.application")
     id("android-module")
@@ -5,7 +7,10 @@ plugins {
 
 android {
     defaultConfig {
-        applicationId = buildsrc.Config.appId
+        applicationId = Config.appId
+
+        buildConfigField("String", "API_BASE_URL", "\"${Config.apiUrl}\"")
+        buildConfigField("String", "API_KEY", "\"${Config.apiKey}\"")
     }
 
     buildTypes {
