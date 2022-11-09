@@ -6,9 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 internal fun buildOkHttpClient(
     loggingInterceptor: HttpLoggingInterceptor,
     apiKeyInterceptor: ApiKeyInterceptor,
-) {
-    OkHttpClient.Builder()
-        .addInterceptor(apiKeyInterceptor)
-        .addInterceptor(loggingInterceptor)
-        .build()
-}
+) = OkHttpClient.Builder()
+    .addInterceptor(apiKeyInterceptor)
+    .addInterceptor(loggingInterceptor)
+    .build()

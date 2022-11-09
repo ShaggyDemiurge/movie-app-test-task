@@ -24,9 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.bumptech.glide.request.RequestOptions
 import com.github.shaggydemiurge.movieapp.core.entities.MovieSummary
 import com.github.shaggydemiurge.movieapp.core.util.DateTimeFormat
+import com.github.shaggydemiurge.movieapp.presentation.R
 import com.github.shaggydemiurge.movieapp.presentation.common.LoadMoreHandler
+import com.github.shaggydemiurge.movieapp.presentation.common.Logged
+import com.github.shaggydemiurge.movieapp.presentation.common.SnackbarErrorHandler
 import com.skydoves.landscapist.glide.GlideImage
 import org.koin.androidx.compose.koinViewModel
 
@@ -34,33 +38,49 @@ import org.koin.androidx.compose.koinViewModel
 fun MovieListView(
     modifier: Modifier = Modifier,
     viewModel: MovieListViewModel = koinViewModel(),
-    onMovieSelect: (movieId: String) -> Unit,
+    onMovieSelect: (movieId: Int) -> Unit,
 ) {
-    val lazyListState = rememberLazyListState()
+    Logged("MovieListView") {
+        val lazyListState = rememberLazyListState()
 
-    val movieList by viewModel.movieList
-    val listLoading by viewModel.listLoading
+        val movieList by viewModel.movieList
+        val listLoading by viewModel.listLoading
 
-    LoadMoreHandler(lazyListState, buffer = 4) {
-        viewModel.loadMore()
-    }
-
-    LazyColumn(
-        modifier = modifier,
-        state = lazyListState
-    ) {
-        items(movieList, key = { it.id }) { item ->
-            MovieCard(
-                movieSummary = item,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .defaultMinSize(minHeight = 200.dp).clickable { onMovieSelect(item.id) }
-            )
+        LoadMoreHandler(lazyListState, buffer = 4) {
+            viewModel.loadMore()
         }
-        if (listLoading) {
-            item {
-                Loader(modifier = Modifier.fillMaxWidth().height(40.dp))
+
+        Box(modifier = modifier) {
+            SnackbarErrorHandler(
+                errorFlow = viewModel.listErrors,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .fillMaxWidth()
+            )
+
+            LazyColumn(
+                modifier = Modifier.matchParentSize(),
+                state = lazyListState
+            ) {
+                items(movieList, key = { it.id }) { item ->
+                    MovieCard(
+                        movieSummary = item,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                            .defaultMinSize(minHeight = 200.dp)
+                            .clickable { onMovieSelect(item.id) }
+                    )
+                }
+                if (listLoading) {
+                    item {
+                        Loader(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(40.dp)
+                        )
+                    }
+                }
             }
         }
     }
@@ -74,6 +94,12 @@ fun MovieCard(movieSummary: MovieSummary, modifier: Modifier = Modifier) {
 
         GlideImage(
             imageModel = { movieSummary.posterUri },
+            previewPlaceholder = R.drawable.filmstrip,
+            requestOptions = {
+                RequestOptions.placeholderOf(R.drawable.filmstrip)
+                    .error(R.drawable.filmstrip)
+                    .fallback(R.drawable.filmstrip)
+            },
             modifier = Modifier.constrainAs(poster) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
@@ -84,45 +110,42 @@ fun MovieCard(movieSummary: MovieSummary, modifier: Modifier = Modifier) {
             }
         )
 
-        val score = movieSummary.avgScore
-        if (score != null) {
-            val bgColor = MaterialTheme.colors.background
-            Canvas(
-                modifier = Modifier.constrainAs(ratingBackground) {
-                    top.linkTo(ratingIndicator.top, 2.dp)
-                    bottom.linkTo(ratingIndicator.bottom, 2.dp)
-                    start.linkTo(ratingIndicator.start, 2.dp)
-                    end.linkTo(ratingIndicator.end, 2.dp)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                }
-            ) {
-                drawCircle(color = bgColor)
+        val bgColor = MaterialTheme.colors.background
+        Canvas(
+            modifier = Modifier.constrainAs(ratingBackground) {
+                top.linkTo(ratingIndicator.top, 2.dp)
+                bottom.linkTo(ratingIndicator.bottom, 2.dp)
+                start.linkTo(ratingIndicator.start, 2.dp)
+                end.linkTo(ratingIndicator.end, 2.dp)
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
             }
-
-            CircularProgressIndicator(
-                progress = score / 100f,
-                modifier = Modifier
-                    .size(48.dp)
-                    .constrainAs(ratingIndicator) {
-                        bottom.linkTo(parent.bottom)
-                        start.linkTo(posterGuideline)
-                        end.linkTo(posterGuideline)
-                    }
-            )
-            Text(
-                text = score.toInt().toString(),
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colors.onBackground,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.constrainAs(ratingValue) {
-                    top.linkTo(ratingIndicator.top)
-                    bottom.linkTo(ratingIndicator.bottom)
-                    start.linkTo(ratingIndicator.start)
-                    end.linkTo(ratingIndicator.end)
-                }
-            )
+        ) {
+            drawCircle(color = bgColor)
         }
+
+        CircularProgressIndicator(
+            progress = movieSummary.avgScore / 10f,
+            modifier = Modifier
+                .size(48.dp)
+                .constrainAs(ratingIndicator) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(posterGuideline)
+                    end.linkTo(posterGuideline)
+                }
+        )
+        Text(
+            text = String.format("%.1f", movieSummary.avgScore),
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.onBackground,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.constrainAs(ratingValue) {
+                top.linkTo(ratingIndicator.top)
+                bottom.linkTo(ratingIndicator.bottom)
+                start.linkTo(ratingIndicator.start)
+                end.linkTo(ratingIndicator.end)
+            }
+        )
 
         createVerticalChain(title, releaseDate, chainStyle = ChainStyle.Packed)
 

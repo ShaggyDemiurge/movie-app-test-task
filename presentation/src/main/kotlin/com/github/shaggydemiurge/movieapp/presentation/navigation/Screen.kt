@@ -8,5 +8,5 @@ sealed interface Screen : Parcelable {
     object List : Screen
 
     @Parcelize
-    data class Details(val movieId: String) : Screen
+    data class Details(val movieId: Int) : Screen
 }

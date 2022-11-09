@@ -10,9 +10,8 @@ internal fun buildRetrofit(
     networkConfig: NetworkConfig,
     moshi: Moshi,
     client: OkHttpClient,
-) =
-    Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .baseUrl(networkConfig.baseUrl)
-        .client(client)
-        .build()
+) = Retrofit.Builder()
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .baseUrl(networkConfig.baseUrl)
+    .client(client)
+    .build()

@@ -14,7 +14,7 @@ class MovieListViewModel(
     private val loadMovieListPage: LoadMovieListPage,
 ) : ViewModel() {
 
-    private val paginator = PagePaginator { page ->
+    private val paginator = PagePaginator(1) { page ->
         loadMovieListPage.load(page)
     }
 
@@ -25,6 +25,8 @@ class MovieListViewModel(
     val listLoading
         @Composable
         get() = paginator.subscribeToLoading().collectAsState(false)
+
+    val listErrors get() = paginator.subscribeToErrors()
 
     fun loadMore() {
         if (paginator.isLoading || paginator.reachedEnd) return

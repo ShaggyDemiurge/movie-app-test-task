@@ -5,6 +5,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -30,9 +31,13 @@ abstract class Paginator<Model, State : Paginator.PaginationState<Model>> {
 
     fun subscribeToLoading(): Flow<Boolean> = requestFlow.map { it != null }
 
+    fun subscribeToErrors(): Flow<Throwable> = errorFlow
+
     private val stateFlow = MutableStateFlow<State?>(null)
 
     private val requestFlow = MutableStateFlow<RequestCouple<State>?>(null)
+
+    private val errorFlow = MutableSharedFlow<Throwable>()
 
     private var requestCouple by requestFlow
 
@@ -113,7 +118,11 @@ abstract class Paginator<Model, State : Paginator.PaginationState<Model>> {
                 previousState
             )
             this@Paginator.requestCouple = newCouple
-            newCouple.job.await()
+            try {
+                newCouple.job.await()
+            } catch (e: Exception) {
+                previousState
+            }
         }
     }
 

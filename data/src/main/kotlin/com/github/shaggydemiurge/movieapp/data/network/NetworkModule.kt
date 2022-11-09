@@ -1,5 +1,6 @@
 package com.github.shaggydemiurge.movieapp.data.network
 
+import com.github.shaggydemiurge.movieapp.data.network.api.MovieNetworkApi
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.BuildConfig
 import org.koin.core.module.dsl.factoryOf
@@ -16,4 +17,6 @@ internal val networkModule = module {
             level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
         }
     }
+
+    singleOf(MovieNetworkApi::create)
 }

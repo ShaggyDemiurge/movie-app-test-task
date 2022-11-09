@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MovieApp</string>
+
+    <string name="error_server_404">Resource was not found</string>
+    <string name="error_server_unknown">Unexpected error: %d</string>
+    <string name="error_internal_unknown">Unexpected internal error: %s</string>
+    <string name="error_connection">Problems with connection, please try again later</string>
 </resources>
