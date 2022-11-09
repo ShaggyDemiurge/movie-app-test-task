@@ -20,7 +20,6 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":domain"))
 
     implementation(Lib.Android.Core)
     implementation(Lib.Android.AppCompat)
