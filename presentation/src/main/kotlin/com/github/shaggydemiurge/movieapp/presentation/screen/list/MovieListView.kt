@@ -128,15 +128,15 @@ fun MovieCard(movieSummary: MovieSummary, modifier: Modifier = Modifier) {
 
         Text(
             movieSummary.title,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
             color = MaterialTheme.colors.onBackground,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.h6,
             modifier = Modifier
                 .constrainAs(title) {
                     start.linkTo(posterGuideline, 16.dp)
                     end.linkTo(parent.end, 16.dp)
                     top.linkTo(parent.top)
-                    bottom.linkTo(releaseDate.top, 8.dp)
+                    bottom.linkTo(releaseDate.top, 16.dp)
                     width = Dimension.fillToConstraints
                 }
         )
