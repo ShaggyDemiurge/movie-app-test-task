@@ -1,4 +1,4 @@
-package com.github.shaggydemiurge.movieapp.core.ext
+package com.github.shaggydemiurge.movieapp.core.util
 
 import java.util.logging.Logger
 
