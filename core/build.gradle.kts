@@ -3,6 +3,7 @@ import buildsrc.Lib
 plugins {
     id("com.android.library")
     id("android-module")
+    id("android-desugar")
 }
 
 dependencies {

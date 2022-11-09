@@ -22,5 +22,9 @@ gradlePlugin {
             id = "android-module"
             implementationClass = "buildsrc.AndroidModulePlugin"
         }
+        create("android-desugar") {
+            id = "android-desugar"
+            implementationClass = "buildsrc.DesugaringPlugin"
+        }
     }
 }

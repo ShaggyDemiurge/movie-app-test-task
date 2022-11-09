@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     id("kotlin-parcelize")
     id("android-module")
+    id("android-desugar")
 }
 
 android {
@@ -27,5 +28,7 @@ dependencies {
     debugImplementation(Lib.Compose.UiTooling)
     implementation(Lib.Compose.Preview)
     implementation(Lib.Compose.Material)
+    implementation(Lib.Compose.ConstraintLayout)
     implementation(Lib.Compose.Navigation)
+    implementation(Lib.Landscapist)
 }

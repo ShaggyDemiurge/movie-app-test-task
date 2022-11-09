@@ -13,6 +13,7 @@ object Lib {
         const val Core = "androidx.core:core-ktx:1.9.0"
         const val AppCompat = "androidx.appcompat:appcompat:1.5.1"
         const val ActivityExt = "androidx.activity:activity-ktx:1.6.1"
+        const val Desugaring = "com.android.tools:desugar_jdk_libs:1.1.5"
     }
 
     object Compose {
@@ -24,6 +25,7 @@ object Lib {
         const val Material = "androidx.compose.material:material:$Version"
         const val MaterialIconsCore = "androidx.compose.material:material-icons-core:$Version"
         const val MaterialIconsExt = "androidx.compose.material:material-icons-extended:$Version"
+        const val ConstraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
         // Using this instead of standard navigation for argument support and type safety without adding KSP
         const val Navigation = "dev.olshevski.navigation:reimagined:1.3.0"
@@ -35,4 +37,5 @@ object Lib {
     }
 
     const val Koin = "io.insert-koin:koin-androidx-compose:3.3.0"
+    const val Landscapist = "com.github.skydoves:landscapist-glide:2.0.3"
 }
