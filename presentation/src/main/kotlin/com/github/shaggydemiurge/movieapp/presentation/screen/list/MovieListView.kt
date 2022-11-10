@@ -1,6 +1,7 @@
 package com.github.shaggydemiurge.movieapp.presentation.screen.list
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.defaultMinSize
@@ -9,7 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -17,6 +18,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,6 +30,7 @@ import com.github.shaggydemiurge.movieapp.core.entities.MovieSummary
 import com.github.shaggydemiurge.movieapp.core.util.DateTimeFormat
 import com.github.shaggydemiurge.movieapp.presentation.R
 import com.github.shaggydemiurge.movieapp.presentation.common.SnackbarErrorHandler
+import com.github.shaggydemiurge.movieapp.presentation.common.ext.shiftTo
 import com.github.shaggydemiurge.movieapp.presentation.common.widget.LoadMoreHandler
 import com.github.shaggydemiurge.movieapp.presentation.common.widget.Logged
 import com.skydoves.landscapist.glide.GlideImage
@@ -54,18 +57,22 @@ fun MovieListView(
                     .fillMaxWidth()
             )
 
+            val cardBgColorNormal = MaterialTheme.colors.background
+            val cardBgColorAlternate = cardBgColorNormal.shiftTo(0.2f, Color.Gray)
+
             LazyColumn(
                 modifier = Modifier.matchParentSize(),
                 state = lazyListState
             ) {
-                items(viewModel.movieList, key = { it.id }) { item ->
+                itemsIndexed(viewModel.movieList, key = { index, item -> item.id }) { index, item ->
                     MovieCard(
                         movieSummary = item,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(8.dp)
                             .defaultMinSize(minHeight = 200.dp)
                             .clickable { onMovieSelect(item.id) }
+                            .background(if (index % 2 == 0) cardBgColorNormal else cardBgColorAlternate)
+                            .padding(8.dp)
                     )
                 }
                 if (viewModel.listLoading) {
@@ -74,6 +81,9 @@ fun MovieListView(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(100.dp)
+                                .background(
+                                    if (viewModel.movieList.size % 2 == 0) cardBgColorNormal else cardBgColorAlternate
+                                )
                         )
                     }
                 }
