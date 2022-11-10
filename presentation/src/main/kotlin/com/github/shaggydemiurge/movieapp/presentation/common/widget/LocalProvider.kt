@@ -1,4 +1,4 @@
-package com.github.shaggydemiurge.movieapp.presentation.common
+package com.github.shaggydemiurge.movieapp.presentation.common.widget
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider

@@ -15,7 +15,6 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -28,9 +27,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.github.shaggydemiurge.movieapp.core.entities.MovieSummary
 import com.github.shaggydemiurge.movieapp.core.util.DateTimeFormat
 import com.github.shaggydemiurge.movieapp.presentation.R
-import com.github.shaggydemiurge.movieapp.presentation.common.LoadMoreHandler
-import com.github.shaggydemiurge.movieapp.presentation.common.Logged
 import com.github.shaggydemiurge.movieapp.presentation.common.SnackbarErrorHandler
+import com.github.shaggydemiurge.movieapp.presentation.common.widget.LoadMoreHandler
+import com.github.shaggydemiurge.movieapp.presentation.common.widget.Logged
 import com.skydoves.landscapist.glide.GlideImage
 import org.koin.androidx.compose.koinViewModel
 
@@ -43,16 +42,13 @@ fun MovieListView(
     Logged("MovieListView") {
         val lazyListState = rememberLazyListState()
 
-        val movieList by viewModel.movieList
-        val listLoading by viewModel.listLoading
-
         LoadMoreHandler(lazyListState, buffer = 4) {
             viewModel.loadMore()
         }
 
         Box(modifier = modifier) {
             SnackbarErrorHandler(
-                errorFlow = viewModel.listErrors,
+                errorFlow = viewModel.errors,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .fillMaxWidth()
@@ -62,7 +58,7 @@ fun MovieListView(
                 modifier = Modifier.matchParentSize(),
                 state = lazyListState
             ) {
-                items(movieList, key = { it.id }) { item ->
+                items(viewModel.movieList, key = { it.id }) { item ->
                     MovieCard(
                         movieSummary = item,
                         modifier = Modifier
@@ -72,12 +68,12 @@ fun MovieListView(
                             .clickable { onMovieSelect(item.id) }
                     )
                 }
-                if (listLoading) {
+                if (viewModel.listLoading) {
                     item {
                         Loader(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(40.dp)
+                                .height(100.dp)
                         )
                     }
                 }

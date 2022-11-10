@@ -1,4 +1,4 @@
-package com.github.shaggydemiurge.movieapp.presentation.common
+package com.github.shaggydemiurge.movieapp.presentation.common.widget
 
 import android.content.Context
 import com.github.shaggydemiurge.movieapp.core.error.ConnectionException

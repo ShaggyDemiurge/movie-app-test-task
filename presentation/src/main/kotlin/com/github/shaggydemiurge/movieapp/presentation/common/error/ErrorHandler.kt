@@ -11,6 +11,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.github.shaggydemiurge.movieapp.presentation.common.error.ErrorResolver
+import com.github.shaggydemiurge.movieapp.presentation.common.widget.localLogger
 import kotlinx.coroutines.flow.Flow
 
 /**

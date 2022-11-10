@@ -1,4 +1,4 @@
-package com.github.shaggydemiurge.movieapp.presentation.common
+package com.github.shaggydemiurge.movieapp.presentation.common.widget
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
