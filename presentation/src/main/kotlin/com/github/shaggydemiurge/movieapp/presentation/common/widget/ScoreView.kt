@@ -8,12 +8,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ScoreView(score: Float, modifier: Modifier) {
+fun ScoreView(score: Float, modifier: Modifier = Modifier, trackColor: Color = MaterialTheme.colors.primary) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         val bgColor = MaterialTheme.colors.background
         Canvas(
@@ -26,6 +27,7 @@ fun ScoreView(score: Float, modifier: Modifier) {
             progress = score / 10f,
             modifier = Modifier
                 .matchParentSize(),
+            color = trackColor,
             strokeWidth = 6.dp
         )
         Text(

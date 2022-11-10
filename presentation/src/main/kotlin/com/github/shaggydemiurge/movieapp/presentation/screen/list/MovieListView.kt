@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -20,6 +21,7 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -146,9 +148,10 @@ fun MovieCard(movieSummary: MovieSummary, modifier: Modifier = Modifier) {
             }
         )
         ScoreView(
-            movieSummary.avgScore ?: 0f,
-            Modifier
+            score = movieSummary.avgScore ?: 0f,
+            modifier = Modifier
                 .size(48.dp)
+                .shadow(4.dp, shape = CircleShape)
                 .constrainAs(scoreIndicator) {
                     bottom.linkTo(parent.bottom, 8.dp)
                     start.linkTo(posterGuideline)
@@ -181,12 +184,11 @@ fun MovieCard(movieSummary: MovieSummary, modifier: Modifier = Modifier) {
             textAlign = TextAlign.End,
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
-                .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                 .constrainAs(releaseDate) {
                     start.linkTo(posterGuideline, 16.dp)
                     end.linkTo(parent.end, 16.dp)
                     top.linkTo(title.bottom)
-                    bottom.linkTo(parent.bottom)
+                    bottom.linkTo(parent.bottom, 8.dp)
                     width = Dimension.fillToConstraints
                     visibility = if (movieSummary.releaseDate != null) Visibility.Visible else Visibility.Gone
                 }
