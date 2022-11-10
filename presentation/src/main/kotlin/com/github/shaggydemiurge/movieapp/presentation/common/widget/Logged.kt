@@ -7,14 +7,14 @@ import androidx.compose.runtime.compositionLocalOf
 import com.github.shaggydemiurge.movieapp.core.util.logger
 import org.slf4j.Logger
 
-val localLoggerName = compositionLocalOf { "" }
+private val LocalLoggerHolder = compositionLocalOf { logger("") }
 
 val localLogger: Logger
     @Composable
     @ReadOnlyComposable
-    get() = logger(localLoggerName.current)
+    get() = LocalLoggerHolder.current
 
 @Composable
 fun Logged(name: String, content: @Composable () -> Unit) {
-    CompositionLocalProvider(localLoggerName provides name, content = content)
+    CompositionLocalProvider(LocalLoggerHolder provides logger(name), content = content)
 }
