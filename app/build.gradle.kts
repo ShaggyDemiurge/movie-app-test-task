@@ -13,8 +13,29 @@ android {
         buildConfigField("String", "API_KEY", "\"${Config.apiKey}\"")
     }
 
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file(property("DEBUG_STORE_FILE") as String)
+            storePassword = property("DEBUG_STORE_PASSWORD") as String
+            keyAlias = property("DEBUG_KEY_ALIAS") as String
+            keyPassword = property("DEBUG_KEY_PASSWORD") as String
+        }
+
+        create("release") {
+            // TODO replace with release keys for real project
+            storeFile = file(property("DEBUG_STORE_FILE") as String)
+            storePassword = property("DEBUG_STORE_PASSWORD") as String
+            keyAlias = property("DEBUG_KEY_ALIAS") as String
+            keyPassword = property("DEBUG_KEY_PASSWORD") as String
+        }
+    }
+
     buildTypes {
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("debug")
+        }
         getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

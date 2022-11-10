@@ -98,7 +98,7 @@ fun MovieListView(
                         }
                     }
                 }
-                itemsIndexed(viewModel.movieList, key = { index, item -> item.id }) { index, item ->
+                itemsIndexed(viewModel.movieList, key = { _, item -> item.id }) { index, item ->
                     MovieCard(
                         movieSummary = item,
                         modifier = Modifier
