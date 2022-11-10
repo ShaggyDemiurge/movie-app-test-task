@@ -13,11 +13,11 @@ fun interface ErrorResolver {
     fun resolveError(context: Context, error: Throwable): String?
 
     companion object {
-        val local = compositionLocalOf { ErrorResolver { _, _ -> null } }
+        val Local = compositionLocalOf { ErrorResolver { _, _ -> null } }
 
         val current
             @Composable
             @ReadOnlyComposable
-            get() = local.current
+            get() = Local.current
     }
 }

@@ -1,9 +1,10 @@
-package com.github.shaggydemiurge.movieapp.presentation.common.error
+package com.github.shaggydemiurge.movieapp.presentation.common.app
 
 import android.content.Context
 import com.github.shaggydemiurge.movieapp.core.error.ConnectionException
 import com.github.shaggydemiurge.movieapp.core.error.ServerException
 import com.github.shaggydemiurge.movieapp.presentation.R
+import com.github.shaggydemiurge.movieapp.presentation.common.error.ErrorResolver
 
 class AppErrorResolver : ErrorResolver {
     override fun resolveError(context: Context, error: Throwable): String = when (error) {

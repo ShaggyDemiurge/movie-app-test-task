@@ -8,7 +8,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import com.github.shaggydemiurge.movieapp.presentation.common.error.AppErrorResolver
+import com.github.shaggydemiurge.movieapp.presentation.common.app.AppErrorResolver
+import com.github.shaggydemiurge.movieapp.presentation.common.app.AppLoadableViewDelegate
 import com.github.shaggydemiurge.movieapp.presentation.common.widget.LocalProvider
 import com.github.shaggydemiurge.movieapp.presentation.navigation.MainNavigationHost
 import com.github.shaggydemiurge.movieapp.presentation.theme.MovieAppTheme
@@ -28,7 +29,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     LocalProvider(
-                        errorResolver = AppErrorResolver()
+                        errorResolver = AppErrorResolver(),
+                        loadableViewDelegate = AppLoadableViewDelegate()
                     ) {
                         MainNavigationHost()
                     }
