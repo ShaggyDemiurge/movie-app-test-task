@@ -5,6 +5,7 @@ import org.koin.dsl.module
 
 val presentationModule = module {
     includes(
+        MainViewModel.module,
         MovieListViewModel.module
     )
 }
