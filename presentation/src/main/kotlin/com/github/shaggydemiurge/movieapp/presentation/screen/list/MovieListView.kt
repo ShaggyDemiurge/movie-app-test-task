@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -163,6 +164,8 @@ fun MovieCard(movieSummary: MovieSummary, modifier: Modifier = Modifier) {
             textAlign = TextAlign.Start,
             color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.h6,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .constrainAs(title) {
                     start.linkTo(posterGuideline, 16.dp)

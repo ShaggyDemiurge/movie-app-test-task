@@ -1,5 +1,6 @@
 package com.github.shaggydemiurge.movieapp.presentation.screen.details
 
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.github.shaggydemiurge.movieapp.core.entities.MovieDetails
@@ -28,4 +29,5 @@ fun MovieDetailsContent(
     modifier: Modifier = Modifier,
     onBack: () -> Unit,
 ) {
+    Text(movieDetails.toString(), modifier = modifier)
 }
