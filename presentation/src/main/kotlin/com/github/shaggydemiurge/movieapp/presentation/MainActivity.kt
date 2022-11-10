@@ -8,7 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import com.github.shaggydemiurge.movieapp.presentation.common.widget.AppErrorResolver
+import com.github.shaggydemiurge.movieapp.presentation.common.error.AppErrorResolver
 import com.github.shaggydemiurge.movieapp.presentation.common.widget.LocalProvider
 import com.github.shaggydemiurge.movieapp.presentation.navigation.MainNavigationHost
 import com.github.shaggydemiurge.movieapp.presentation.theme.MovieAppTheme

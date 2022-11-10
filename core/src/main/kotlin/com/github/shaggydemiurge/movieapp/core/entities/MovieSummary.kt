@@ -6,6 +6,6 @@ data class MovieSummary(
     val id: Int,
     val title: String,
     val posterUri: String?,
-    val avgScore: Float,
-    val releaseDate: LocalDate,
+    val avgScore: Float?,
+    val releaseDate: LocalDate?,
 )

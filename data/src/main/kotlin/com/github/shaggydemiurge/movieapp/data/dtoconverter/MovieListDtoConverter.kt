@@ -17,7 +17,7 @@ internal class MovieListDtoConverter(private val dto: MovieListResponse) {
         if (posterPath != null && baseImageUrl != null && posterSize != null) {
             baseImageUrl + posterSize + posterPath
         } else null,
-        avgScore,
+        avgScore.takeIf { voteCount > 0 },
         releaseDate
     )
 }

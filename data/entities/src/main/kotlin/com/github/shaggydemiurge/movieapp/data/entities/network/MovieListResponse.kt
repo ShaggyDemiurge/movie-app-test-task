@@ -16,7 +16,8 @@ data class MovieListResponse(
         @Json(name = "id") val id: Int,
         @Json(name = "title") val title: String,
         @Json(name = "poster_path") val posterPath: String?,
-        @Json(name = "release_date") val releaseDate: LocalDate,
+        @Json(name = "release_date") val releaseDate: LocalDate?,
+        @Json(name = "vote_count") val voteCount: Int,
         @Json(name = "vote_average") val avgScore: Float,
     )
 }

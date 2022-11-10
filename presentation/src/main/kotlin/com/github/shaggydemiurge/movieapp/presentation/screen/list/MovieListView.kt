@@ -1,6 +1,5 @@
 package com.github.shaggydemiurge.movieapp.presentation.screen.list
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -19,12 +18,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.compose.Visibility
 import com.bumptech.glide.request.RequestOptions
 import com.github.shaggydemiurge.movieapp.core.entities.MovieSummary
 import com.github.shaggydemiurge.movieapp.core.util.DateTimeFormat
@@ -33,6 +32,7 @@ import com.github.shaggydemiurge.movieapp.presentation.common.SnackbarErrorHandl
 import com.github.shaggydemiurge.movieapp.presentation.common.ext.shiftTo
 import com.github.shaggydemiurge.movieapp.presentation.common.widget.LoadMoreHandler
 import com.github.shaggydemiurge.movieapp.presentation.common.widget.Logged
+import com.github.shaggydemiurge.movieapp.presentation.common.widget.ScoreView
 import com.skydoves.landscapist.glide.GlideImage
 import org.koin.androidx.compose.koinViewModel
 
@@ -80,7 +80,7 @@ fun MovieListView(
                         Loader(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(100.dp)
+                                .height(200.dp)
                                 .background(
                                     if (viewModel.movieList.size % 2 == 0) cardBgColorNormal else cardBgColorAlternate
                                 )
@@ -96,7 +96,7 @@ fun MovieListView(
 fun MovieCard(movieSummary: MovieSummary, modifier: Modifier = Modifier) {
     ConstraintLayout(modifier = modifier) {
         val posterGuideline = createGuidelineFromStart(0.3f)
-        val (poster, title, releaseDate, ratingIndicator, ratingBackground, ratingValue) = createRefs()
+        val (poster, title, releaseDate, scoreIndicator) = createRefs()
 
         GlideImage(
             imageModel = { movieSummary.posterUri },
@@ -115,42 +115,16 @@ fun MovieCard(movieSummary: MovieSummary, modifier: Modifier = Modifier) {
                 height = Dimension.fillToConstraints
             }
         )
-
-        val bgColor = MaterialTheme.colors.background
-        Canvas(
-            modifier = Modifier.constrainAs(ratingBackground) {
-                top.linkTo(ratingIndicator.top, 2.dp)
-                bottom.linkTo(ratingIndicator.bottom, 2.dp)
-                start.linkTo(ratingIndicator.start, 2.dp)
-                end.linkTo(ratingIndicator.end, 2.dp)
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
-            }
-        ) {
-            drawCircle(color = bgColor)
-        }
-
-        CircularProgressIndicator(
-            progress = movieSummary.avgScore / 10f,
-            modifier = Modifier
+        ScoreView(
+            movieSummary.avgScore ?: 0f,
+            Modifier
                 .size(48.dp)
-                .constrainAs(ratingIndicator) {
-                    bottom.linkTo(parent.bottom)
+                .constrainAs(scoreIndicator) {
+                    bottom.linkTo(parent.bottom, 8.dp)
                     start.linkTo(posterGuideline)
                     end.linkTo(posterGuideline)
+                    visibility = if (movieSummary.avgScore != null) Visibility.Visible else Visibility.Gone
                 }
-        )
-        Text(
-            text = String.format("%.1f", movieSummary.avgScore),
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colors.onBackground,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.constrainAs(ratingValue) {
-                top.linkTo(ratingIndicator.top)
-                bottom.linkTo(ratingIndicator.bottom)
-                start.linkTo(ratingIndicator.start)
-                end.linkTo(ratingIndicator.end)
-            }
         )
 
         createVerticalChain(title, releaseDate, chainStyle = ChainStyle.Packed)
@@ -171,7 +145,7 @@ fun MovieCard(movieSummary: MovieSummary, modifier: Modifier = Modifier) {
         )
 
         Text(
-            movieSummary.releaseDate.format(DateTimeFormat.SLASH_DMY),
+            movieSummary.releaseDate?.format(DateTimeFormat.SLASH_DMY) ?: "",
             textAlign = TextAlign.End,
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
@@ -182,6 +156,7 @@ fun MovieCard(movieSummary: MovieSummary, modifier: Modifier = Modifier) {
                     top.linkTo(title.bottom)
                     bottom.linkTo(parent.bottom)
                     width = Dimension.fillToConstraints
+                    visibility = if (movieSummary.releaseDate != null) Visibility.Visible else Visibility.Gone
                 }
         )
     }

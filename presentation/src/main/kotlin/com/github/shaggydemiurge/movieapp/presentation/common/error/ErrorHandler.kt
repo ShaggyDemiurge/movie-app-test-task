@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.zIndex
 import com.github.shaggydemiurge.movieapp.presentation.common.error.ErrorResolver
 import com.github.shaggydemiurge.movieapp.presentation.common.widget.localLogger
 import kotlinx.coroutines.flow.Flow
@@ -49,7 +50,7 @@ fun SnackbarErrorHandler(
 ) {
     val hostState = remember { SnackbarHostState() }
 
-    SnackbarHost(hostState, modifier = modifier) { data ->
+    SnackbarHost(hostState, modifier = modifier.zIndex(1f)) { data ->
         Snackbar(
             data,
             backgroundColor = MaterialTheme.colors.error,
