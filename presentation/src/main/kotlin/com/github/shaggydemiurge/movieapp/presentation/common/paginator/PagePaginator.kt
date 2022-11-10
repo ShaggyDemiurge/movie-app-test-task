@@ -5,13 +5,16 @@ import com.github.shaggydemiurge.movieapp.core.entities.PagedResult
 object PagePaginator {
 
     operator fun <Model> invoke(startPage: Int = 0, onLoadMore: suspend (page: Int) -> PagedResult<Model>) =
-        ImmutablePaginator(
-            state = State(emptyList(), startPage - 1, null),
-            delegate = Delegate(onLoadMore)
-        )
+        ImmutablePaginator(delegate = Delegate(startPage, onLoadMore))
 
-    class Delegate<Model>(private val onLoadMore: suspend (page: Int) -> PagedResult<Model>) :
+    class Delegate<Model>(
+        private val startPage: Int,
+        private val onLoadMore: suspend (page: Int) -> PagedResult<Model>,
+    ) :
         ImmutablePaginator.Delegate<Model, State<Model>> {
+
+        override fun createEmptyState(): State<Model> = State(emptyList(), startPage - 1, null)
+
         override suspend fun State<Model>.loadMore(): State<Model> {
             val result = onLoadMore(currentLoadedPage + 1)
             return if (result.data.isNotEmpty()) {

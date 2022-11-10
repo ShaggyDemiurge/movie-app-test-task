@@ -27,6 +27,9 @@ class MovieListViewModel(
     var listLoading by mutableStateOf(false)
         private set
 
+    var listRefreshing by mutableStateOf(false)
+        private set
+
     private val errorRelay =
         MutableSharedFlow<Throwable>(extraBufferCapacity = 10, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
@@ -40,6 +43,10 @@ class MovieListViewModel(
         ) {
             paginator = paginator.requestMore()
         }
+    }
+
+    fun refresh() {
+        paginator = paginator.refresh()
     }
 
     companion object {

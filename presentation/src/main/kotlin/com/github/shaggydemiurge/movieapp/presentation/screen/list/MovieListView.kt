@@ -12,12 +12,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
@@ -36,6 +40,7 @@ import com.github.shaggydemiurge.movieapp.presentation.common.widget.ScoreView
 import com.skydoves.landscapist.glide.GlideImage
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieListView(
     modifier: Modifier = Modifier,
@@ -60,10 +65,34 @@ fun MovieListView(
             val cardBgColorNormal = MaterialTheme.colors.background
             val cardBgColorAlternate = cardBgColorNormal.shiftTo(0.2f, Color.Gray)
 
+            val refreshState = rememberPullRefreshState(
+                refreshing = viewModel.listRefreshing,
+                onRefresh = { viewModel.refresh() }
+            )
+
             LazyColumn(
-                modifier = Modifier.matchParentSize(),
+                modifier = Modifier
+                    .matchParentSize()
+                    .pullRefresh(refreshState),
                 state = lazyListState
             ) {
+                if (refreshState.progress > 0) {
+                    item {
+                        Box(
+                            Modifier
+                                .fillMaxWidth()
+                                .height((100 * refreshState.progress.coerceAtMost(1f)).toInt().dp)
+                                .background(cardBgColorAlternate)
+
+                        ) {
+                            Text(
+                                stringResource(R.string.pull_to_refresh),
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                    }
+                }
                 itemsIndexed(viewModel.movieList, key = { index, item -> item.id }) { index, item ->
                     MovieCard(
                         movieSummary = item,
