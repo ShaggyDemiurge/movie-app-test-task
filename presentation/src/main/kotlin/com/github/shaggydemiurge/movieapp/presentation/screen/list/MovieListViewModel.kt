@@ -23,6 +23,7 @@ class MovieListViewModel(
     )
 
     val movieList get() = paginator.data
+        .distinctBy { it.id } // Occasionally api can send duplicates in the end of one page and beginning of another
 
     var listLoading by mutableStateOf(false)
         private set
