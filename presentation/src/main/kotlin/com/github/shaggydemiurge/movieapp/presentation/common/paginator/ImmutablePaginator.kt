@@ -1,5 +1,6 @@
 package com.github.shaggydemiurge.movieapp.presentation.common.paginator
 
+@Suppress("MemberVisibilityCanBePrivate")
 data class ImmutablePaginator<Model, State : ImmutablePaginator.PaginationState<Model>>(
     val state: State,
     private val onLoadMore: suspend (State) -> State,

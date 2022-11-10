@@ -36,7 +36,8 @@ class MovieListViewModel(
         if (listLoading) return
         request(
             onLoading = this::listLoading::set,
-            onError = errorRelay::tryEmit
+            onError = errorRelay::tryEmit,
+            showLoadingDelay = 100L
         ) {
             paginator = paginator.requestMore()
         }
