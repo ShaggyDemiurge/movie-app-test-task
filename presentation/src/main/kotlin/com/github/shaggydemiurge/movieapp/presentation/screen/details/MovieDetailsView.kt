@@ -22,13 +22,14 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Visibility
-import com.bumptech.glide.request.RequestOptions
 import com.github.shaggydemiurge.movieapp.core.entities.MovieDetails
 import com.github.shaggydemiurge.movieapp.core.util.DateTimeFormat
 import com.github.shaggydemiurge.movieapp.presentation.R
@@ -103,16 +104,22 @@ fun MovieDetailsCard(
 ) {
     ConstraintLayout(modifier = modifier) {
         val posterGuideline = createGuidelineFromStart(0.4f)
-        val (poster, title, tagline, releaseDate, scoreIndicator, backButton) = createRefs()
+        val (poster, placeholder, title, tagline, releaseDate, scoreIndicator, backButton) = createRefs()
+
+        Icon(
+            painterResource(R.drawable.filmstrip),
+            null,
+            modifier = Modifier.constrainAs(placeholder) {
+                start.linkTo(poster.start)
+                top.linkTo(poster.top)
+                bottom.linkTo(poster.bottom)
+                end.linkTo(poster.end)
+            }.zIndex(-1f)
+                .size(64.dp)
+        )
 
         GlideImage(
             imageModel = { movieDetails.posterUri },
-            previewPlaceholder = R.drawable.filmstrip,
-            requestOptions = {
-                RequestOptions.placeholderOf(R.drawable.filmstrip)
-                    .error(R.drawable.filmstrip)
-                    .fallback(R.drawable.filmstrip)
-            },
             modifier = Modifier.constrainAs(poster) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)

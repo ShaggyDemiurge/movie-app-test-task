@@ -21,9 +21,7 @@ object Lib {
         const val Core = "androidx.compose.ui:ui:$Version"
         const val UiTooling = "androidx.compose.ui:ui-tooling:$Version"
         const val Preview = "androidx.compose.ui:ui-tooling-preview:$Version"
-        const val Foundation = "androidx.compose.foundation:foundation:$Version"
         const val Material = "androidx.compose.material:material:$Version"
-        const val MaterialIconsCore = "androidx.compose.material:material-icons-core:$Version"
         const val MaterialIconsExt = "androidx.compose.material:material-icons-extended:$Version"
         const val ConstraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
