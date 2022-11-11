@@ -9,7 +9,7 @@ data class ConfigurationResponse(
 ) {
     @JsonClass(generateAdapter = true)
     data class Images(
-        @Json(name = "base_url") val baseUrl: String,
+        @Json(name = "secure_base_url") val baseUrl: String,
         @Json(name = "poster_sizes") val posterSizes: List<String>,
     )
 }
