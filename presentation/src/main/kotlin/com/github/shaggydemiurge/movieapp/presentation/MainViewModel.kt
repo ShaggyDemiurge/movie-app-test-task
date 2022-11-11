@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.shaggydemiurge.movieapp.core.usecase.UpdateConfiguration
 import com.github.shaggydemiurge.movieapp.core.util.logger
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
@@ -17,6 +18,7 @@ class MainViewModel(private val updateConfiguration: UpdateConfiguration) : View
             try {
                 updateConfiguration()
             } catch (e: Throwable) {
+                if (e is CancellationException) throw e
                 logger.error("Error while loading config", e)
             }
         }
