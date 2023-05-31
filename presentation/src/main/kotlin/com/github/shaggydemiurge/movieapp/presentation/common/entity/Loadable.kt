@@ -15,17 +15,9 @@ sealed interface Loadable<out T> {
         override fun <R> map(f: (T) -> R) = Error<R>(error)
     }
 
-    class Loading<T> : Loadable<T> {
+    object Loading : Loadable<Nothing> {
         override val value = null
 
-        override fun equals(other: Any?): Boolean =
-            other is Loading<*>
-
-        override fun hashCode(): Int = 0
-
-        override fun toString(): String =
-            "Loading"
-
-        override fun <R> map(f: (T) -> R) = Loading<R>()
+        override fun <R> map(f: (Nothing) -> R) = Loading
     }
 }

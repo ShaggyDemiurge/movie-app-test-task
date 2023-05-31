@@ -29,7 +29,7 @@ fun <T> ViewModel.load(
     loader: suspend () -> T,
 ) {
     viewModelScope.launch {
-        setter(Loadable.Loading())
+        setter(Loadable.Loading)
         try {
             val result = loader()
             setter(Loadable.Success(result))

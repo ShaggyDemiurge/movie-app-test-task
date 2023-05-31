@@ -18,7 +18,7 @@ class MovieDetailsViewModel(
 
     private val movieId = movieId.id
 
-    var movieDetails by mutableStateOf<Loadable<MovieDetails>>(Loadable.Loading())
+    var movieDetails by mutableStateOf<Loadable<MovieDetails>>(Loadable.Loading)
         private set
 
     init {
